@@ -1,0 +1,1 @@
+try it [here](https://epoch.github.io/beer-timer.js/)

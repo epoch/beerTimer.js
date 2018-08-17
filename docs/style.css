@@ -1,0 +1,91 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(252, 250, 243);
+}
+
+input {
+  font-size: inherit;
+  width: 7rem;
+  border: none;
+  border-bottom: 4px dotted black;
+  background-color: rgb(252, 250, 243);
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.timer {
+  font-size: 3rem;
+  padding: 0 4rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.time-remaining {
+  font-size: 9rem;
+}
+
+.fullscreen-span {
+  font-size: 1rem;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+svg {
+  display: block;
+  width: 50vw;
+  height: 100vh;
+  background-color: rgb(252, 250, 243);
+}
+
+#cup {
+  stroke-width: 20px;
+  stroke: black;
+}
+
+#cup-gap {
+  stroke-opacity: 1;
+  fill: url(#beerGradient);
+  stroke: white;
+  stroke-width: 1px;
+}
+
+#cup-reflection {
+  fill: white;
+}
+
+#cup-empty-space {
+  -webkit-clip-path: url(#mask);
+  clip-path: url(#mask);
+  fill: white;
+  transition: all 2.8s ease-out;
+}
+
+.start-button {
+  font-size: inherit;
+  display: block;
+  margin-top: 2rem;
+}
+
+.refill-button {
+  font-size: inherit;
+}
+
+.hide {
+  display: none;
+}
