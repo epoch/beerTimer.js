@@ -8,6 +8,7 @@ const cupEmptySpace = document.querySelector('#cup-empty-space')
 const startButton = document.querySelector('.start-button')
 const refillButton = document.querySelector('.refill-button')
 const secondsInput = document.querySelector('.seconds-input')
+const minutesInput = document.querySelector('.minutes-input')
 const sipIntervalInput = document.querySelector('.sip-interval-input')
 const fullScreenSpan = document.querySelector('.fullscreen-span')
 const form = document.querySelector('.timer__form')
@@ -60,7 +61,7 @@ function formSubmitHandler(e) {
   e.preventDefault()
   
   secondsPerStep = sipIntervalInput.value
-  let totalSeconds = secondsInput.value
+  let totalSeconds = +secondsInput.value + minutesInput.value * 60
 
   timer = createTimer(
     { ms:  totalSeconds * 1000 }, 
