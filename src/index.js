@@ -10,7 +10,8 @@ const refillButton = document.querySelector('.refill-button')
 const secondsInput = document.querySelector('.seconds-input')
 const sipIntervalInput = document.querySelector('.sip-interval-input')
 const fullScreenSpan = document.querySelector('.fullscreen-span')
-const form = document.querySelector('form')
+const form = document.querySelector('.timer__form')
+const countdownSection = document.querySelector('.timer-countdown')
 
 function msToSecond(ms) {
   return Math.ceil(ms / 1000)
@@ -31,13 +32,18 @@ function updateDom(remaining) {
   timeRemainingDiv.textContent = msToSecond(remaining)
   cupEmptySpace.style.height = `${height}px`
   if (remaining < 0) {
-    refillButton.classList.remove('hide')
+    refillButton.classList.toggle('hide')
+    timeRemainingDiv.classList.toggle('hide')
   }
 }
 
 function refillClickHandler(e) {
   e.target.classList.add('hide')
-  form.classList.remove('hide')
+
+  form.classList.toggle('hide')
+  countdownSection.classList.toggle('hide')
+  timeRemainingDiv.classList.toggle('hide')
+
   timeRemainingDiv.textContent = ''
   cupEmptySpace.style.height = '0px'
 }
@@ -54,12 +60,16 @@ function formSubmitHandler(e) {
   e.preventDefault()
   
   secondsPerStep = sipIntervalInput.value
+  let totalSeconds = secondsInput.value
+
   timer = createTimer(
-    { ms: secondsInput.value * 1000 }, 
+    { ms:  totalSeconds * 1000 }, 
     updateDom
   )
 
-  form.classList.add('hide')
+  form.classList.toggle('hide')
+  countdownSection.classList.toggle('hide')
+  
   timer.start()
 }
 

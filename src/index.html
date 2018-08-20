@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="container">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="20 0 640 640">
         <defs>
           <linearGradient id="beerGradient">
             <stop offset="0%" stop-color="gold"/>
@@ -45,16 +45,25 @@
       </svg>
 
     <div class="timer">
-      <form action="">
-        count down <input class="seconds-input" type="number" value="60" min="1"> seconds.<br>
-        take a sip every <input class="sip-interval-input" type="number" value="10" min="1">
+      <form class="timer__form">
+        <div>
+          <label>count down</label>
+          <p>
+            <input class="timer__input minutes-input" type="number" value="0" min="0" max="999"><span class="unit">m</span> 
+            <input class="timer__input seconds-input" type="number" value="60" min="1" max="999"><span class="unit">s</span>
+          </p>
+          <label>take a sip every</label> 
+          <p><input class="timer__input sip-interval-input" type="number" value="10" min="1"><span class="unit">s</span>.</p>
+        </div>
         <button class="start-button">Start</button>
       </form>
-      <div class="time-remaining">
-      </div>
-      <div>
+      
+      <section class="timer-countdown hide">
+        <div class="time-remaining">
+        </div>
         <button class="refill-button hide">refill</button>
-      </div>
+      </section>
+
       <span class="fullscreen-span">fullscreen</span>
     </div>
     </div>

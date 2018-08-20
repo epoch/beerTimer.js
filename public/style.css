@@ -1,10 +1,3 @@
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 html, body {
   height: 100%;
 }
@@ -14,29 +7,55 @@ body {
   background-color: rgb(252, 250, 243);
 }
 
-input {
-  font-size: inherit;
-  width: 7rem;
-  border: none;
-  border-bottom: 4px dotted black;
-  background-color: rgb(252, 250, 243);
-}
-
 .container {
   display: flex;
-  height: 100vh;
+  flex-direction: column;
+  height: 100%;
 }
 
 .timer {
-  font-size: 3rem;
-  padding: 0 4rem 0 2rem;
+  flex: 1;
+  font-size: 1.8rem;
+  padding: 2rem;
+}
+
+.timer__form {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-self: center;
+}
+
+.timer-countdown {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+form p {
+  margin-bottom: 1rem;
+}
+
+.unit {
+  color: gray;
+  font-size: 0.7em;
 }
 
 .time-remaining {
-  font-size: 9rem;
+  font-size: 8rem;
+  width: 100%;
+  text-align: center;
+}
+
+.timer__input {
+  font-size: 1.4em;
+  width: 1.7em;
+  border: none;
+  border-bottom: 4px dotted gray;
+  background-color: rgb(252, 250, 243);
+  color: #3c3939;
 }
 
 .fullscreen-span {
@@ -48,8 +67,7 @@ input {
 
 svg {
   display: block;
-  width: 50vw;
-  height: 100vh;
+  height: 50%;
   background-color: rgb(252, 250, 243);
 }
 
@@ -73,19 +91,73 @@ svg {
   -webkit-clip-path: url(#mask);
   clip-path: url(#mask);
   fill: white;
-  transition: all 2.8s ease-out;
+  transition: all 2.7s ease-out;
 }
 
 .start-button {
   font-size: inherit;
   display: block;
-  margin-top: 2rem;
+  margin: 0 auto;
+  color: white;
+  background-color: #865cd6;
+  border: none;
+  padding: 6px 22px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 
+              0px 2px 2px 0px rgba(0, 0, 0, 0.14), 
+              0px 3px 1px -2px rgba(0, 0, 0, 0);  
 }
 
 .refill-button {
   font-size: inherit;
+  display: block;
+  margin: 0 auto;
+  color: white;
+  background-color: #865cd6;
+  border: none;
+  padding: 6px 22px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 
+              0px 2px 2px 0px rgba(0, 0, 0, 0.14), 
+              0px 3px 1px -2px rgba(0, 0, 0, 0);  
 }
 
 .hide {
   display: none;
 }
+
+@media (min-width: 32em) {
+
+  .container {
+    flex-direction: row;
+  }
+
+  svg {
+    width: 45%;
+    height: 100%;
+  }
+
+}
+
+@media (min-width: 36em) {
+  .timer {
+    font-size: 2.2rem;
+  }
+}
+
+@media (min-width: 56em) {
+
+  svg {
+    width: 50%;
+  }
+
+  .timer {
+    font-size: 3.4rem;
+  }
+
+  .time-remaining {
+    font-size: 10rem;
+  }  
+  
+}
+
