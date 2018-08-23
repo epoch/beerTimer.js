@@ -1,23 +1,11 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const paths = require('./paths')
 
 module.exports = {
-  entry: paths.entry,
-  output: {
-    filename: '[chunkhash].bundle.js',
-    path: paths.output
-  },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: paths.template,
-      hash: false
-    }),
-    new CopyWebpackPlugin([
-      paths.public
-    ]),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
@@ -32,15 +20,15 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[local]___[hash:base64:5]',
+              sourceMap: true
             },
-          },
-          'sass-loader',
+          }
         ],
       },
     ],
+  },
+  optimization: {
+    minimizer: [new OptimizeCssAssetsPlugin({})]
   },  
   devtool: 'source-map'
 }
