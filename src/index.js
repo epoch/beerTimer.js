@@ -1,5 +1,8 @@
 const { createTimer } = require('./timer')
 
+require('./reset.css')
+require('./style.css')
+
 let timer = null
 let secondsPerStep = null
 
