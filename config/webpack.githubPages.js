@@ -1,7 +1,11 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
+let config = require('./webpack.prod')
 const paths = require('./paths')
-paths.output = paths.outputGithubPages
 
-module.exports = require('./webpack.prod')
+config.output = {
+  path: paths.outputGithubPages
+}
+
+module.exports = config
 
