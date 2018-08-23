@@ -77,6 +77,11 @@ function formSubmitHandler(e) {
   timer.start()
 }
 
-form.addEventListener('submit', formSubmitHandler)
 refillButton.addEventListener('click', refillClickHandler)
 fullScreenSpan.addEventListener('click', toggleFullScreen)
+form.addEventListener('submit', formSubmitHandler)
+form.addEventListener('focus', e => {
+  if (e.target.tagName === 'INPUT') {
+    e.target.select()
+  }
+}, true)
