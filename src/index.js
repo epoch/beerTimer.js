@@ -31,7 +31,7 @@ function calcHeightFromTimeRemaining(remaining) {
 function updateDom(remaining) {
   let height = calcHeightFromTimeRemaining(remaining)
   timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining + 999))
-  cupEmptySpace.style.height = `${height}px`
+  cupEmptySpace.setAttribute('height', `${height}px`)
   if (remaining < 0) {
     refillButton.classList.toggle('hide')
     timeRemainingDiv.classList.toggle('hide')
@@ -46,7 +46,7 @@ function refillClickHandler(e) {
   timeRemainingDiv.classList.toggle('hide')
 
   timeRemainingDiv.textContent = ''
-  cupEmptySpace.style.height = '0px'
+  cupEmptySpace.setAttribute('height', '0px')
 }
 
 function toggleFullScreen() {
