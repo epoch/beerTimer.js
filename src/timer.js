@@ -4,7 +4,7 @@ function createTimer(options, cb = noop) {
 
   const defaultOptions = {
     ms: 0,
-    interval: 250
+    interval: 200
   }
 
   options = Object.assign(defaultOptions, options)

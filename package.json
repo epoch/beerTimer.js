@@ -25,5 +25,8 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "strftime": "^0.10.0"
   }
 }

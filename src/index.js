@@ -1,4 +1,5 @@
 const { createTimer } = require('./timer')
+const strftime = require('strftime')
 
 require('./reset.css')
 require('./style.css')
@@ -17,10 +18,6 @@ const fullScreenSpan = document.querySelector('.fullscreen-span')
 const form = document.querySelector('.timer__form')
 const countdownSection = document.querySelector('.timer-countdown')
 
-function msToSecond(ms) {
-  return Math.ceil(ms / 1000)
-}
-
 function getEmptySpaceHeight() {
   return document.querySelector('#cup-gap').getBBox().height + 1
 }
@@ -33,7 +30,7 @@ function calcHeightFromTimeRemaining(remaining) {
 
 function updateDom(remaining) {
   let height = calcHeightFromTimeRemaining(remaining)
-  timeRemainingDiv.textContent = msToSecond(remaining)
+  timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining + 999))
   cupEmptySpace.style.height = `${height}px`
   if (remaining < 0) {
     refillButton.classList.toggle('hide')
