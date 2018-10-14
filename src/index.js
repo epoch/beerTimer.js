@@ -18,7 +18,6 @@ const fullScreenSpan = document.querySelector('.fullscreen-span')
 const form = document.querySelector('.timer__form')
 const countdownSection = document.querySelector('.timer-countdown')
 
-
 function msToSec(ms) {
   return ms / 1000
 }
@@ -37,9 +36,14 @@ function calcHeightFromTimeRemaining(remaining) {
 }
 
 function updateDom({ remaining }) {
-  timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining))
-
-  let height = calcHeightFromTimeRemaining(remaining)
+  if (Math.floor(msToSec(remaining)) < 10) {
+    timeRemainingDiv.classList.add('warning')
+    timeRemainingDiv.textContent = strftime('%-S', new Date(remaining))
+  } else {
+    timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining))
+  }
+  
+  let height = Math.abs(calcHeightFromTimeRemaining(remaining))
   cupEmptySpace.setAttribute('height', `${height}px`)
 
   if (remaining < 0) {
@@ -72,6 +76,7 @@ function formSubmitHandler(e) {
 
   form.classList.toggle('hide')
   countdownSection.classList.toggle('hide')
+  timeRemainingDiv.classList.remove('warning')
 
   secondsPerStep = sipIntervalInput.value
   totalSeconds = +secondsInput.value + minutesInput.value * 60

@@ -32,6 +32,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  font-size: 3em;
 }
 
 form p {
@@ -44,9 +45,9 @@ form p {
 }
 
 .time-remaining {
-  font-size: 8rem;
   width: 100%;
   text-align: center;
+  transition: all .4s linear;
 }
 
 .timer__input {
@@ -133,6 +134,8 @@ svg {
   display: none;
 }
 
+
+
 @media (min-width: 32em) {
 
   .container {
@@ -162,9 +165,14 @@ svg {
     font-size: 3.4rem;
   }
 
-  .time-remaining {
-    font-size: 10rem;
+  .time-countdown {
+    font-size: 10em;
   }  
   
+}
+
+.warning {
+  color: red;
+  font-size: 1.8em;
 }
 
