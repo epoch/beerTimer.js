@@ -1,53 +1,40 @@
-const { createTimer } = require('../src/timer')
+const Timer = require('../src/timer')
 
 beforeEach((() => {
-  const noop = () => {}
-  global.timer = createTimer({ ms: 1000 }, noop)  
+  global.timer = new Timer(5000, 0, 0)  
 }))
 
-test('new timer defaults', () => {
-  expect(createTimer({}, () => {}).getOptions()).toEqual({
-    ms: 0,
-    interval: 250
-  })
+test('elapsed', () => {
+  expect(timer.elapsed()).toEqual(0)
 })
 
-test('getOptions returns a copied object', () => {
-  const options = { ms: 1000, interval: 250 }
-  expect(timer.getOptions()).toEqual(options)
-  timer.getOptions().ms = 98765
-  expect(timer.getOptions()).toEqual(options)
+test('time remaining', () => {
+  expect(timer.timeRemaining()).toEqual(5000)
 })
 
-test('start returns started at', () => {
-  expect(timer.start(1000)).toEqual(1000)
+test('isExpired', () => {
+  expect(timer.isExpired()).toEqual(false)
 })
 
-test('start at defaults to current time', () => {
-  expect(timer.start()).toBeLessThanOrEqual(new Date().getTime())
+test('has time remaining', () => {
+  expect(timer.hasTimeRemaining()).toEqual(true)
 })
 
-test('getTimeRemaining before timer start', () => {
-  const timer = createTimer({ ms: 5000 })
-  expect(timer.getTimeRemaining()).toEqual(5000)
+test('record 1000 ms', () => {
+  let newTimer = timer.record(1000)
+  expect(newTimer.elapsed()).toEqual(1000)
+  expect(newTimer.timeRemaining()).toEqual(4000)
 })
 
-test('getTimeRemaining 300 milliseconds after start', () => {
-  jest.useFakeTimers();
-  const callback = jest.fn();
-  const timer = createTimer({ ms: 5000 }, callback)
-  timer.start()
-  expect(callback).not.toBeCalled()
-  jest.advanceTimersByTime(300);
-  expect(callback).toBeCalled()
-  expect(callback).toHaveBeenCalledTimes(1)
+test('skip 1000 ms', () => {
+  expect(timer.skip(1000).elapsed()).toEqual(0)
 })
 
-test('getTimeRemaining 5000 milliseconds after start', () => {
-  const callback = jest.fn();
-  const timer = createTimer({ ms: 5000 }, callback)
-  timer.start(0)
-  expect(timer.getTimeRemaining(5000)).toEqual(0)
+test('record 5000 ms', () => {
+  let newTimer = timer.record(5000)
+  expect(newTimer.elapsed()).toEqual(5000)
+  expect(newTimer.timeRemaining()).toEqual(0)
+  expect(newTimer.isExpired()).toEqual(true)
 })
 
 

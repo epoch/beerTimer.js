@@ -1,55 +1,39 @@
-const noop = () => {}
+class Timer {
 
-function createTimer(options, cb = noop) {
+  constructor(duration, startTime, elapsed = 0) {
+    this._startTime = startTime
+    this._duration = duration
+    this._elapsed = elapsed
+  } 
 
-  const defaultOptions = {
-    ms: 0,
-    interval: 200
+  record(timeStamp) {
+    return new Timer(
+      this._duration, 
+      timeStamp, 
+      timeStamp - this._startTime + this._elapsed
+    )
   }
 
-  options = Object.assign(defaultOptions, options)
-
-  let timerId = null
-  let startedAt = null
-  let finishedAt = null
-
-  const nowInMillisecond = () => new Date().getTime()
-
-  const publicMethods = {
-    
-    start: (now = nowInMillisecond()) => {
-      if (startedAt) return startedAt
-
-      startedAt = now
-      finishedAt = startedAt + options.ms
-
-      timerId = setInterval(() => {
-
-        if (nowInMillisecond() > finishedAt) {
-          clearInterval(timerId)
-        }
-
-        cb( publicMethods.getTimeRemaining() )
-
-      }, options.interval)
-
-      return startedAt
-    },
-
-    getOptions: () => Object.assign({}, options),
-
-    getTimeRemaining: (now = nowInMillisecond()) => {
-      if (startedAt === null) {
-        return options.ms
-      } else {
-        return finishedAt - now
-      }
-    }
+  skip(timeStamp) {
+    return new Timer(this._duration, timeStamp, this._elapsed)
   }
 
-  return publicMethods
+  timeRemaining() {
+    return this._duration - this.elapsed()
+  }
+
+  elapsed() {
+    return this._elapsed
+  }
+
+  hasTimeRemaining() {
+    return this.timeRemaining() > 0
+  }
+
+  isExpired() {
+    return this.elapsed() >= this._duration
+  }
+
 }
 
-module.exports = {
-  createTimer
-}
+module.exports = Timer

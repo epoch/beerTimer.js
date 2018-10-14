@@ -1,15 +1,15 @@
-const { createTimer } = require('./timer')
 const strftime = require('strftime')
+window.createCountDown = require('./countDown')
 
 require('./reset.css')
 require('./style.css')
 
 let timer = null
 let secondsPerStep = null
+let totalSeconds = null
 
 const timeRemainingDiv = document.querySelector('.time-remaining')
 const cupEmptySpace = document.querySelector('#cup-empty-space')
-const startButton = document.querySelector('.start-button')
 const refillButton = document.querySelector('.refill-button')
 const secondsInput = document.querySelector('.seconds-input')
 const minutesInput = document.querySelector('.minutes-input')
@@ -18,20 +18,30 @@ const fullScreenSpan = document.querySelector('.fullscreen-span')
 const form = document.querySelector('.timer__form')
 const countdownSection = document.querySelector('.timer-countdown')
 
+
+function msToSec(ms) {
+  return ms / 1000
+}
+
 function getEmptySpaceHeight() {
-  return document.querySelector('#cup-gap').getBBox().height + 1
+  const padding = 1 // 
+  return document.querySelector('#cup-gap').getBBox().height + padding
 }
 
 function calcHeightFromTimeRemaining(remaining) {
-  const step = timer.getOptions().ms / 1000 / secondsPerStep
-  const heightPerStep =  getEmptySpaceHeight() / step
-  return (step - Math.ceil((remaining / 1000) / secondsPerStep)) * heightPerStep
+  const numOfStep = totalSeconds / secondsPerStep
+  const heightPerStep =  getEmptySpaceHeight() / numOfStep
+  const heightMultiplier = numOfStep - Math.ceil( Math.floor(msToSec(remaining)) / secondsPerStep)
+
+  return heightMultiplier * heightPerStep
 }
 
-function updateDom(remaining) {
+function updateDom({ remaining }) {
+  timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining))
+
   let height = calcHeightFromTimeRemaining(remaining)
-  timeRemainingDiv.textContent = strftime('%-M:%S', new Date(remaining + 999))
   cupEmptySpace.setAttribute('height', `${height}px`)
+
   if (remaining < 0) {
     refillButton.classList.toggle('hide')
     timeRemainingDiv.classList.toggle('hide')
@@ -59,18 +69,15 @@ function toggleFullScreen() {
 
 function formSubmitHandler(e) {
   e.preventDefault()
-  
-  secondsPerStep = sipIntervalInput.value
-  let totalSeconds = +secondsInput.value + minutesInput.value * 60
-
-  timer = createTimer(
-    { ms:  totalSeconds * 1000 }, 
-    updateDom
-  )
 
   form.classList.toggle('hide')
   countdownSection.classList.toggle('hide')
-  
+
+  secondsPerStep = sipIntervalInput.value
+  totalSeconds = +secondsInput.value + minutesInput.value * 60
+
+  timer = createCountDown(totalSeconds * 1000, 250)
+  timer.setTickHandler(updateDom)
   timer.start()
 }
 
