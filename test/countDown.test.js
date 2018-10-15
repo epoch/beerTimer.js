@@ -12,7 +12,7 @@ test('defaults', () => {
 test('tick handler fire straight after start', () => {
   jest.useFakeTimers();
   const callback = jest.fn();
-  countDown.setTickHandler(callback)
+  countDown.onTick(callback)
   expect(callback).not.toBeCalled()
 
   countDown.start()
@@ -27,7 +27,7 @@ test('tick handler fire straight after start', () => {
 test('tick handler fire after interval', () => {
   jest.useFakeTimers();
   const callback = jest.fn();
-  countDown.setTickHandler(callback)
+  countDown.onTick(callback)
   countDown.start()
   jest.advanceTimersByTime(600);
 

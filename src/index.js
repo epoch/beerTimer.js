@@ -1,10 +1,11 @@
 const strftime = require('strftime')
-window.createCountDown = require('./countDown')
+const createCountDown = require('./countDown')
+const finishAudio = new Audio(require('./boxingBell.mp3'))
 
 require('./reset.css')
 require('./style.css')
 
-let timer = null
+window.timer = null
 let secondsPerStep = null
 let totalSeconds = null
 
@@ -33,6 +34,10 @@ function calcHeightFromTimeRemaining(remaining) {
   const heightMultiplier = numOfStep - Math.ceil( Math.floor(msToSec(remaining)) / secondsPerStep)
 
   return heightMultiplier * heightPerStep
+}
+
+function playAudio() {
+  finishAudio.play()
 }
 
 function updateDom({ remaining }) {
@@ -82,7 +87,8 @@ function formSubmitHandler(e) {
   totalSeconds = +secondsInput.value + minutesInput.value * 60
 
   timer = createCountDown(totalSeconds * 1000, 250)
-  timer.setTickHandler(updateDom)
+  timer.onTick(updateDom)
+  timer.onExpired(playAudio)
   timer.start()
 }
 

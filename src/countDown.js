@@ -3,7 +3,8 @@ const Timer = require('./timer')
 function createCountDown(duration, interval = 1000) {
 
   let _timer = new Timer(duration, now())
-  let _tickHandler = remaining => console.log(remaining)
+  let _onTick = remaining => console.log(remaining)
+  let _onExpired = () => console.log("time's up!")
   let running = false
   let timeoutId = null
   
@@ -12,7 +13,7 @@ function createCountDown(duration, interval = 1000) {
   }
   
   function tick() {
-    _tickHandler({ 
+    _onTick({ 
       elapsed: _timer.elapsed(), 
       remaining: _timer.timeRemaining()
     })
@@ -21,12 +22,20 @@ function createCountDown(duration, interval = 1000) {
       _timer = _timer.record(now())
       timeoutId = setTimeout(tick, interval)
     }
+
+    if (_timer.isExpired()) {
+      _onExpired()
+    }
   }
 
   // public api ///////////////////////////////////
 
-  function setTickHandler(tickHandler) {
-    _tickHandler = tickHandler
+  function onTick(tickHandler) {
+    _onTick = tickHandler
+  }
+
+  function onExpired(expiredHandler) {
+    _onExpired = expiredHandler
   }
 
   function start() {
@@ -45,7 +54,8 @@ function createCountDown(duration, interval = 1000) {
   }
 
   const publicApi = {
-    setTickHandler,
+    onTick,
+    onExpired,
     start,
     pause
   }
