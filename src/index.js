@@ -55,6 +55,8 @@ function updateDom({ remaining }) {
 
   if (remaining < 0) {
     refillButton.classList.toggle('hide')
+    pauseButton.classList.toggle('hide')
+    cancelButton.classList.toggle('hide')
     timeRemainingDiv.classList.toggle('hide')
   }
 }
@@ -63,6 +65,8 @@ function refillClickHandler(e) {
   e.target.classList.add('hide')
 
   form.classList.toggle('hide')
+  pauseButton.classList.toggle('hide')
+  cancelButton.classList.toggle('hide')
   countdownSection.classList.toggle('hide')
   timeRemainingDiv.classList.toggle('hide')
 
@@ -80,12 +84,12 @@ function cancelClickHandler(e) {
 }
 
 function pauseClickHandler() {
-  if (pauseButton.textContent === 'pause') {
-    timer.pause()
-    pauseButton.textContent = 'play'
-  } else {
-    timer.start()
+  if (timer.isPaused()) {
     pauseButton.textContent = 'pause'
+    timer.start()
+  } else {
+    pauseButton.textContent = 'play'
+    timer.pause()
   }
 }
 
@@ -103,6 +107,7 @@ function formSubmitHandler(e) {
   form.classList.toggle('hide')
   countdownSection.classList.toggle('hide')
   timeRemainingDiv.classList.remove('warning')
+  pauseButton.textContent = 'pause'
 
   secondsPerStep = sipIntervalInput.value
   totalSeconds = +secondsInput.value + minutesInput.value * 60

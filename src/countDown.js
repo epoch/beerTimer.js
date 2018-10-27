@@ -59,12 +59,17 @@ function createCountDown(duration, interval = 1000) {
     console.log('paused')
   }
 
+  function isPaused() {
+    return !running
+  }
+
   const publicApi = {
     onTick,
     onExpired,
     start,
     pause,
-    cancel
+    cancel,
+    isPaused
   }
 
   return publicApi
