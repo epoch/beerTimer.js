@@ -12,6 +12,8 @@ let totalSeconds = null
 const timeRemainingDiv = document.querySelector('.time-remaining')
 const cupEmptySpace = document.querySelector('#cup-empty-space')
 const refillButton = document.querySelector('.refill-button')
+const cancelButton = document.querySelector('.cancel-button')
+const pauseButton = document.querySelector('.pause-button')
 const secondsInput = document.querySelector('.seconds-input')
 const minutesInput = document.querySelector('.minutes-input')
 const sipIntervalInput = document.querySelector('.sip-interval-input')
@@ -68,6 +70,25 @@ function refillClickHandler(e) {
   cupEmptySpace.setAttribute('height', '0px')
 }
 
+function cancelClickHandler(e) {
+  timer.cancel();
+  form.classList.toggle('hide')
+  countdownSection.classList.toggle('hide')
+
+  timeRemainingDiv.textContent = ''
+  cupEmptySpace.setAttribute('height', '0px')
+}
+
+function pauseClickHandler() {
+  if (pauseButton.textContent === 'pause') {
+    timer.pause()
+    pauseButton.textContent = 'play'
+  } else {
+    timer.start()
+    pauseButton.textContent = 'pause'
+  }
+}
+
 function toggleFullScreen() {
   if (document.webkitFullscreenElement) {
     document.webkitExitFullscreen()
@@ -93,6 +114,8 @@ function formSubmitHandler(e) {
 }
 
 refillButton.addEventListener('click', refillClickHandler)
+pauseButton.addEventListener('click', pauseClickHandler)
+cancelButton.addEventListener('click', cancelClickHandler)
 fullScreenSpan.addEventListener('click', toggleFullScreen)
 form.addEventListener('submit', formSubmitHandler)
 form.addEventListener('focus', e => {

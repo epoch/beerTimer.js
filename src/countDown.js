@@ -46,6 +46,12 @@ function createCountDown(duration, interval = 1000) {
     console.log('started')
   }
 
+  function cancel() {
+    clearTimeout(timeoutId)
+    _timer = new Timer(duration, now())
+    running = false
+  }
+
   function pause() {
     if (!running) return false
     clearTimeout(timeoutId)
@@ -57,7 +63,8 @@ function createCountDown(duration, interval = 1000) {
     onTick,
     onExpired,
     start,
-    pause
+    pause,
+    cancel
   }
 
   return publicApi
