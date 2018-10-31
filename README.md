@@ -1,5 +1,5 @@
 # beer timer
 
-A SVG beer countdown timer. Your time is up when the glass is empty. 
+A SVG beer countdown timer. When the glass is empty your time is up!
 
-try it [here](https://epoch.github.io/beer-timer.js/)
+try it [here](https://epoch.github.io/beerTimer.js/)
